@@ -1,0 +1,304 @@
+import random
+############################################ FUNCIONES 1 (INGRESA NIVEL) #######################################################
+def construir_tablero():
+   # Determina el tamanho del tablero.
+   if n==1:
+      x=8
+      y=8
+      m=10
+   elif n==2:
+      x=16
+      y=16
+      m=40
+   elif n==3 :
+       x=30
+       y=16
+       m=99
+   elif n==4 :
+       x=int(input("¿Cuántas Columnas quieres para este nivel? "))
+       y=int(input("¿Cuantas filas quieres para este nivel? "))
+       m=int(input("¿Cuántas minas desea para este nivel?, cuanto más alto el número, mayor será la dificultad!! "))
+   look=[["."]*(x)for i in range(y)]
+   matrix=[[0]*(x)for i in range(y)]
+
+   return (x,y,m,look, matrix)
+###########################FUNCION2#######################
+def printLook(x,y):
+   for x in range(y):
+       if x==0:
+           print([i+1 for i in range(x,y)])
+       print(x+1, look[x])
+
+################################## MAIN  ###################################################################
+print("Niveles: 1-Facil, 2-Medio, 3-Difícil, 4-Nivel Personalizado")
+n= int(input())
+temp = {}
+(x,y, m, look, matrix) = construir_tablero()
+##################################FUNCION 3 (MATRIZ CONCEPTUAL) ####################################
+def matriz_conceptual () :
+   for w in range(0,m):
+      ran= random.randint(0,(x-1))
+      ran2=random.randint(0,(y-1))
+      if matrix[ran2][ran]==0:
+          matrix[ran2][ran]=9
+      else:
+          while matrix[ran2][ran]!=0:
+              ran=random.randint(0,(x-1))
+              ran2=random.randint(0,(y-1))
+          matrix[ran2][ran]=9
+   return (matrix,x,y)
+matriz_conceptual()
+################################FUNCION 4 (MATRIX NUMERICA) #################################
+def matriz_numerica (matrix,x,y) :
+   for z in range (0,(y)):
+      for w in range(0,(x)):
+          if matrix[z][w]!=9:
+              if z==0:
+                  if w==0:
+                      minas=0
+                      if matrix[z+1][w]==9:
+                          minas+=1
+                      if matrix[z][w+1]== 9:
+                          minas+=1
+                      if matrix[z+1][w+1]==9:
+                          minas+=1
+                      matrix[z][w]=minas
+                  elif w==x-1:
+                      minas=0
+                      if matrix[z+1][w]==9:
+                          minas+=1
+                      if matrix[z][w-1]==9:
+                          minas+=1
+                      if matrix[z+1][w-1]==9:
+                          minas+=1
+                      matrix[z][w]=minas
+                  else:
+                      minas=0
+                      if matrix[z+1][w]==9:
+                          minas+=1
+                      if matrix[z][w+1]==9:
+                          minas+=1
+                      if matrix[z][w-1]==9:
+                          minas+=1
+                      if matrix[z+1][w+1]==9:
+                          minas+=1
+                      if matrix[z+1][w-1]==9:
+                          minas+=1
+                      matrix[z][w]=minas
+              elif z==y-1:
+                  if w==0:
+                      minas=0
+                      if matrix[z-1][w]==9:
+                          minas+=1
+                      if matrix[z][w+1]==9:
+                          minas+=1
+                      if matrix[z-1][w+1]==9:
+                          minas+=1
+                      matrix[z][w]=minas
+                  elif w==x-1:
+                      minas=0
+                      if matrix[z-1][w]==9:
+                          minas+=1
+                      if matrix[z][w-1]==9:
+                          minas+=1
+                      if matrix[z-1][w-1]==9:
+                          minas+=1
+                      matrix[z][w]=minas
+                  else:
+                      minas=0
+                      if matrix[z-1][w]==9:
+                          minas+=1
+                      if matrix[z][w+1]==9:
+                          minas+=1
+                      if matrix[z][w-1]==9:
+                          minas+=1
+                      if matrix[z-1][w+1]==9:
+                          minas+=1
+                      if matrix[z-1][w-1]==9:
+                          minas+=1
+                      matrix[z][w]=minas
+              elif w==0:
+                  minas=0
+                  if matrix[z+1][w]==9:
+                      minas+=1
+                  if matrix[z-1][w]==9:
+                      minas+=1
+                  if matrix[z][w+1]==9:
+                      minas+=1
+                  if matrix[z+1][w+1]==9:
+                      minas+=1
+                  if matrix[z-1][w+1]==9:
+                      minas+=1
+                  matrix[z][w]=minas
+              elif w==x-1:
+                  minas=0
+                  if matrix[z+1][w]==9:
+                      minas+=1
+                  if matrix[z-1][w]==9:
+                      minas+=1
+                  if matrix[z][w-1]==9:
+                      minas+=1
+                  if matrix[z+1][w-1]==9:
+                      minas+=1
+                  if matrix[z-1][w-1]==9:
+                      minas+=1
+                  matrix[z][w]=minas
+              else:
+                  minas=0
+                  if matrix[z+1][w]==9:
+                      minas+=1
+                  if matrix[z-1][w]==9:
+                      minas+=1
+                  if matrix[z][w+1]==9:
+                      minas+=1
+                  if matrix[z][w-1]==9:
+                      minas+=1
+                  if matrix[z+1][w+1]==9:
+                      minas+=1
+                  if matrix[z+1][w-1]==9:
+                      minas+=1
+                  if matrix[z-1][w+1]==9:
+                      minas+=1
+                  if matrix[z-1][w-1]==9:
+                      minas+=1
+                  matrix[z][w]=minas
+   return (matrix,z,w,minas)
+matriz_numerica(matrix,x,y)
+printLook(x,y)
+
+#####################FUNCION 5 (para crear el diccionario y liberar los alrededores) ###############################
+def libres(a, b):
+   a = int(a)
+   b = int(b)
+   global temp
+   #print("Libres")
+   verify = True
+   for key in temp.keys():
+      if temp[key] == 0:
+         verify = False
+   if verify and len(temp) != 0:
+      return
+
+   if matrix[a][b]!=9:
+       if a==0:
+           if b==0:
+               if matrix[a+1][b]!=9:
+                   temp[(a+1) * x + b] = 0
+               if matrix[a][b+1]!=9:
+                   temp[a * x + (b+1)] = 0
+               if matrix[a+1][b+1]!=9:
+                   temp[(a+1) * x + (b+1)] = 0
+           elif b==x-1:
+               if matrix[a+1][b]!=9:
+                   temp[(a+1) * x + b] = 0
+               if matrix[a][b-1]!=9:
+                   temp[a * x + (b-1)] = 0
+               if matrix[a+1][b-1]!=9:
+                   temp[(a+1) * x + (b-1)] = 0
+           else:
+               if matrix[a+1][b]!=9:
+                    temp[(a+1) * x + b] = 0
+               if matrix[a][b+1]!=9:
+                    temp[a * x + (b+1)] = 0
+               if matrix[a][b-1]!=9:
+                   temp[a * x + (b-1)] = 0
+               if matrix[a+1][b+1]!=9:
+                   temp[(a+1) * x + (b+1)] = 0
+               if matrix[a+1][b-1]!=9:
+                   temp[(a+1) * x + (b-1)] = 0
+       elif a==y-1:
+           if b==0:
+               if matrix[a-1][b]!=9:
+                   temp[(a-1) * x + b] = 0
+               if matrix[a][b+1]==9:
+                   temp[a * x + (b+1)] = 0
+               if matrix[a-1][b+1]==9:
+                   temp[(a-1) * x + (b+1)] = 0
+           elif b==x-1:
+               if matrix[a-1][b]!=9:
+                   temp[(a-1) * x + b] = 0
+               if matrix[a][b-1]!=9:
+                   temp[a * x + (b-1)] = 0
+               if matrix[a-1][b-1]!=9:
+                   temp[(a-1) * x + (b-1)] = 0
+           else:
+               if matrix[a-1][b]!=9:
+                   temp[(a-1) * x + b] = 0
+               if matrix[a][b+1]!=9:
+                   temp[a * x + (b+1)] = 0
+               if matrix[a][b-1]!=9:
+                   temp[a * x + (b-1)] = 0
+               if matrix[a-1][b+1]!=9:
+                   temp[(a-1) * x + (b+1)] = 0
+               if matrix[a-1][b-1]==9:
+                   temp[(a-1) * x + (b-1)] = 0
+       elif b==0:
+           if matrix[a+1][b]!=9:
+               temp[(a+1) * x + b] = 0
+           if matrix[a-1][b]!=9:
+               temp[(a-1) * x + b] = 0
+           if matrix[a][b+1]!=9:
+               temp[a * x + (b+1)] = 0
+           if matrix[a+1][b+1]!=9:
+               temp[(a+1) * x + (b+1)] = 0
+           if matrix[a-1][b+1]!=9:
+               temp[(a-1) * x + (b+1)] = 0
+       elif b==x-1:
+           if matrix[a+1][b]!=9:
+               temp[(a+1) * x + b] = 0
+           if matrix[a-1][b]!=9:
+               temp[(a-1) * x + b] = 0
+           if matrix[a][b-1]!=9:
+               temp[a * x + (b-1)] = 0
+           if matrix[a+1][b-1]!=9:
+               temp[(a+1) * x + (b-1)] = 0
+           if matrix[a-1][b-1]!=9:
+               temp[(a-1) * x + (b-1)] = 0
+       else:
+           if matrix[a+1][b]!=9:
+               temp[(a+1) * x + b] = 0
+           if matrix[a-1][b]!=9:
+               temp[(a-1) * x + b] = 0
+           if matrix[a][b+1]!=9:
+               temp[a * x + (b+1)] = 0
+           if matrix[a][b-1]!=9:
+                temp[a * x + (b-1)] = 0
+           if matrix[a+1][b+1]!=9:
+               temp[(a+1) * x + (b+1)] = 0
+           if matrix[a+1][b-1]!=9:
+               temp[(a+1) *x+ (b-1)] = 0
+           if matrix[a-1][b+1]!=9:
+               temp[(a-1) * x + (b+1)] = 0
+           if matrix[a-1][b-1]!=9:
+               temp[(a-1) * x + (b-1)] = 0
+   temp[a * x + b] = 1
+################### PARTE DEL MAIN (Ingresamos la posición de clic#########################################
+for i in range(0,((x*y)-m)):
+   a=int(input("Ingresa un valor de x: "))
+   b=int(input("Ingresa un valor de y: "))
+#Nos determina si tocamos una mina
+   if (matrix[a-1][b-1])==9:
+       print("FALLASTE, TE TOPASTE CON UNA MINA!")
+       break
+   else:
+       look[a-1][b-1]=matrix[a-1][b-1]
+
+       temp = {}
+       libres(a-1, b-1)
+#Ingresamos a nuestro diccionario y mostramos todas las de alrededor
+       if matrix[a-1][b-1] == 0:
+           for key in temp.keys():
+               if temp[key] == 0:
+                   look[int(key/x)][int(key%x)]=matrix[int(key/x)][int(key%x)]
+
+       for x in range(y):
+           print(look[x])
+
+#Se imprime tabla númerica
+#    for j in range(len(matrix)):
+#        print(matrix[j])
+
+#Hacemos un cambio de variable
+# z = a
+# w = b
+
