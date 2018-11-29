@@ -1,0 +1,124 @@
+Diccionario_animales={"A":["El mejor amigo del hombre"],"B":["Es una mascota con espinas"],"C":["Es muy flojo y come hojas"],"D":["Es gordo y come bambú"],"E":["Tiene 8 patas y da miedo"]}
+Diccionario={"A":["FRUTA ROJA CON SEMILLAS MUY PEQUEÑAS"],"B":["FRUTA NARANJA, EMPIEZA CON LA LETRA M"],"C":["FRUTA VERDE, PEQUEÑA Y ÁCIDA"],"D":["EMPIEZA CON M Y TERMINA EN N"],"E":["SOY VERDE, Y ME COMEN CON PAN XD"],"F":["SOMOS LAS BASE DEL CHOCOLATE"],"G":["SOMOS VERDES O MORADOS Y VENGO EN EL JUANE XD"],"H":["TAMBIÉN ME DICEN PIÑA"]}
+frutas=["FRESA","MANGO","LIMON","MELON","PALTA","CACAO","OLIVA","ANANA"]
+Animales=["PERRO","ERIZO","KOALA","PANDA","ARAÑA"]
+############################FUNCIÓN 1 (ELECCION DE LAS FILAS DICCIONARIO 1)##########################
+def fila_eleccion () :
+   x=input("Ingrese la fila, en mayúscula, de la palabra que quiere adivinar: A,  B, C, D, E: ")
+   if x=="A" or x=="B" or x=="C" or x=="D" or x=="E" :
+       if x=="A" :
+           x="A"
+       if x=="B":
+           x="B"
+       if x=="C":
+           x="C"
+       if x=="D" :
+           x="D"
+       if x=="E" :
+           x="E"
+   print(Diccionario[x])
+   return x
+###########################FUNCION 2 (ELECCION DE LAS FILAS DICCIONARIO 2)###############################
+def fila_eleccion_animales () :
+   x=input("Ingrese la fila, en mayúscula, de la palabra que quiere adivinar: A,  B, C, D, E: ")
+   if x=="A" or x=="B" or x=="C" or x=="D" or x=="E" :
+       if x=="A" :
+           x="A"
+       if x=="B":
+           x="B"
+       if x=="C":
+           x="C"
+       if x=="D" :
+           x="D"
+       if x=="E" :
+           x="E"
+   print(Diccionario_animales[x])
+   return x
+##################### MAIN ############################################################
+n=5
+m=0
+matrix=[]
+letras=["A","B","C","D","E"]
+for i in letras:
+   temp=[]
+   for z in range(1,6):
+       x=i+str(z)
+       temp.append(x)
+   matrix.append(temp)
+escoger=int(input("Escriba 1. Frutas, y 2. Animales: "))
+for i in matrix:
+       print(i)
+############################## DETERMINAMOS A CUAL NIVEL ENTRARA Y EN BASE A ELLO INGRESAMOS A LOS DICCIONARIOS
+if escoger==1 :
+   print("OJO: TODAS LAS PALABRAS SON DE 5 LETRAS")
+   for i in range(n+3):
+       fila=fila_eleccion()
+       if fila=="A" or fila=="B" or fila=="C" or fila=="D" or fila=="E" :
+           if fila=="A" :
+               fila=0
+           if fila=="B":
+               fila=1
+           if fila=="C":
+               fila=2
+           if fila=="D" :
+               fila=3
+           if fila=="E" :
+               fila=4
+       else :
+           print("Esa fila no existe")
+           break
+       #print(fila)
+       palabra=input("Inserta el nombre de una FRUTA en mayúsculas ")
+       if palabra not in frutas:
+           print("Palabra Incorrecta")
+           m+=1
+       else:
+           for z in range(5):
+               matrix[fila][z]=palabra[z]+" "
+           for i in matrix:
+               print(i)
+           if matrix[4][0]!="E1" and matrix[3][0]!="D1" and matrix[2][0]!="C1" and matrix[1][0]!="B1" and matrix[0][0]!="A1" :
+               break
+
+
+   if matrix[4][0]!="E1" and matrix[3][0]!="D1" and matrix[2][0]!="C1" and matrix[1][0]!="B1" and matrix[0][0]!="A1" :
+       print("FELICIDADES,GANASTE!")
+   else:
+       print("Lo siento, intenta de nuevo.")
+################################ LO MISMO PERO AHORA PARA EL DICCIONARIO 2 #########################################
+elif escoger==2 :
+   print("OJO: TODAS LAS PALABRAS SON DE 5 LETRAS")
+   for i in range(n+3):
+       fila=fila_eleccion_animales()
+       if fila=="A" or fila=="B" or fila=="C" or fila=="D" or fila=="E" :
+           if fila=="A" :
+               fila=0
+           if fila=="B":
+               fila=1
+           if fila=="C":
+               fila=2
+           if fila=="D" :
+               fila=3
+           if fila=="E" :
+               fila=4
+       else :
+           print("Esa fila no existe")
+           break
+       #print(fila)
+       palabra=input("Inserta el nombre del ANIMAL en mayúsculas ")
+       if palabra not in Animales:
+           print("Palabra Incorrecta")
+           m+=1
+       else:
+           for z in range(5):
+               matrix[fila][z]=palabra[z]+" "
+           for i in matrix:
+               print(i)
+           if matrix[4][0]!="E1" and matrix[3][0]!="D1" and matrix[2][0]!="C1" and matrix[1][0]!="B1" and matrix[0][0]!="A1" :
+               break
+
+
+   if matrix[4][0]!="E1" and matrix[3][0]!="D1" and matrix[2][0]!="C1" and matrix[1][0]!="B1" and matrix[0][0]!="A1" :
+       print("FELICIDADES,GANASTE!")
+   else:
+       print("Lo siento, intenta de nuevo.")
